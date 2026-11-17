@@ -33,7 +33,7 @@
 |---|---|---|---|---|
 | Pendiente de fase | [#10 Crear ResNet-18](https://github.com/itsCarlosDev/kvasir-v2-gastrointestinal-classification/issues/10) | [Carlos](https://github.com/itsCarlosDev) | **05/12** | `feat/dl-carlos` |
 | Pendiente de fase | [#15 Preparar imágenes PyTorch](https://github.com/itsCarlosDev/kvasir-v2-gastrointestinal-classification/issues/15) | [François](https://github.com/Francois0405) | **05/12** | `feat/dl-francois` |
-| Pendiente de fase | [#12 Entrenar ResNet-18](https://github.com/itsCarlosDev/kvasir-v2-gastrointestinal-classification/issues/12) | [Carlos](https://github.com/itsCarlosDev) | **08/12** | `feat/dl-carlos` |
+| Pendiente de fase | [#12 Entrenar ResNet-18](https://github.com/itsCarlosDev/kvasir-v2-gastrointestinal-classification/issues/12) | [François](https://github.com/Francois0405) | **08/12** | `feat/dl-francois` |
 | Pendiente de fase | [#9 Comparar ResNet y ML](https://github.com/itsCarlosDev/kvasir-v2-gastrointestinal-classification/issues/9) | [François](https://github.com/Francois0405) | **09/12** | `feat/dl-francois` |
 
 ## Cierre y ampliación
@@ -41,7 +41,7 @@
 | Estado inicial | Issue | Responsable | Fecha límite |
 |---|---|---|---|
 | En paralelo / finalizar | [#8 Proyecto listo para entrega](https://github.com/itsCarlosDev/kvasir-v2-gastrointestinal-classification/issues/8) | [François](https://github.com/Francois0405) | **10/12** |
-| Opcional | [#11 YOLO Detection opcional](https://github.com/itsCarlosDev/kvasir-v2-gastrointestinal-classification/issues/11) | [François](https://github.com/Francois0405) | **10/12** |
+| Opcional | [#11 YOLO Detection opcional](https://github.com/itsCarlosDev/kvasir-v2-gastrointestinal-classification/issues/11) | [Carlos](https://github.com/itsCarlosDev) | **10/12** |
 
 ## Cronograma visual
 
@@ -61,9 +61,10 @@ gantt
     Métricas de validación          :f3, 2026-11-30, 2026-12-02
     section DL — Carlos
     ResNet-18 / PyTorch             :c5, 2026-12-04, 2026-12-05
-    Entrenamiento ResNet-18         :c6, 2026-12-05, 2026-12-08
+    YOLO Detection (opcional)        :c6, 2026-12-08, 2026-12-10
     section DL — François
     Dataset / DataLoader            :f4, 2026-12-04, 2026-12-05
+    Entrenamiento ResNet-18         :f7, 2026-12-05, 2026-12-08
     Evaluación y comparación        :f5, 2026-12-08, 2026-12-09
     section Cierre
     README y reproducibilidad       :f6, 2026-12-09, 2026-12-10
@@ -73,7 +74,7 @@ gantt
 ## Flujo de ramas y Pull Requests (sin bloqueos)
 
 1. **Primera sincronización:** el contrato se añadió a `main` después de crear las ramas ML. Cada desarrollador hace `git fetch origin && git merge origin/main` **una vez** al empezar, para disponer del mismo documento de interfaces. No se mezcla todavía el trabajo del compañero.
-2. Carlos desarrolla exclusivamente sus módulos en `integration/ml` y François en `feat/ml-francois`. Cada uno arranca sus tests con **fixtures sintéticas**; no necesita esperar al módulo real del otro.
+2. Carlos desarrolla exclusivamente sus módulos en `feat/ml-carlos` y François en `feat/ml-francois`. Cada uno arranca sus tests con **fixtures sintéticas**; no necesita esperar al módulo real del otro.
 3. La rama de integración **`integration/ml`** (ya creada) recibe los PR individuales. Si hace falta reutilizar un cambio puntual antes de la integración, acordar y aplicar un `git cherry-pick <sha>` selectivo. **No fusionar recíprocamente las dos ramas completas**, para evitar conflictos e historial circular.
 4. Carlos integra y valida el conjunto en `integration/ml`. Solo al terminar ML se abre **un PR de `integration/ml` a `main`**, fecha objetivo **03/12**.
 5. Crear `feat/dl-carlos`, `feat/dl-francois` y **`integration/dl`** desde la nueva `main` con ML. Repetir trabajo independiente, integración y revisión. No crear las ramas DL desde la `main` anterior al cierre de ML.
