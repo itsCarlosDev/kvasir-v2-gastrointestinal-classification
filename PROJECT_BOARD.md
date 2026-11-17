@@ -2,6 +2,8 @@
 
 > **Objetivo del equipo:** terminar el proyecto antes del **10/12/2026**. Este documento es un **resumen estático** de los issues de GitHub, no un GitHub Project nativo. Para estados en tiempo real usa los [issues del repositorio](https://github.com/itsCarlosDev/kvasir-v2-gastrointestinal-classification/issues).
 
+**Antes de empezar:** [Contratos de interfaces y trabajo sin bloqueos](./docs/CONTRATOS.md). Cada issue dispone de un test con datos sintéticos para desarrollar sin depender del trabajo del compañero.
+
 ## Vista rápida por fases
 
 | Fase | Fechas | Resultado |
@@ -68,12 +70,21 @@ gantt
     Entrega interna                 :milestone, m1, 2026-12-10, 0d
 ```
 
-## Flujo de ramas y Pull Requests
+## Flujo de ramas y Pull Requests (sin bloqueos)
 
-1. Carlos trabaja en `feat/ml-carlos` y François en `feat/ml-francois`, en archivos separados.
-2. Cada persona termina sus issues ML y abre PR hacia `main`. Revisar los dos PR antes de integrarlos.
-3. Fusionar los PR uno a uno; actualizar la segunda rama desde `main` si es necesario. **ML integrado a más tardar el 03/12.**
-4. Crear `feat/dl-carlos` y `feat/dl-francois` **desde la `main` actualizada**.
-5. Repetir revisión e integración para DL. Reservar el **10/12** para pruebas de ejecución y entrega.
+1. **Primera sincronización:** el contrato se añadió a `main` después de crear las ramas ML. Cada desarrollador hace `git fetch origin && git merge origin/main` **una vez** al empezar, para disponer del mismo documento de interfaces. No se mezcla todavía el trabajo del compañero.
+2. Carlos desarrolla exclusivamente sus módulos en `feat/ml-carlos` y François en `feat/ml-francois`. Cada uno arranca sus tests con **fixtures sintéticas**; no necesita esperar al módulo real del otro.
+3. La rama de integración **`integration/ml`** (ya creada) recibe los PR individuales. Si hace falta reutilizar un cambio puntual antes de la integración, acordar y aplicar un `git cherry-pick <sha>` selectivo. **No fusionar recíprocamente las dos ramas completas**, para evitar conflictos e historial circular.
+4. Carlos integra y valida el conjunto en `integration/ml`. Solo al terminar ML se abre **un PR de `integration/ml` a `main`**, fecha objetivo **03/12**.
+5. Crear `feat/dl-carlos`, `feat/dl-francois` y **`integration/dl`** desde la nueva `main` con ML. Repetir trabajo independiente, integración y revisión. No crear las ramas DL desde la `main` anterior al cierre de ML.
+6. **10/12 fecha límite interna absoluta:** `main` debe contener el proyecto reproducible. YOLO es opcional y jamás bloquea la entrega.
 
-> Los estados de esta tabla **no se actualizan automáticamente**. Para un tablero arrastrable con vistas Board, Table y Roadmap, crear un **GitHub Project** e importar los issues existentes desde el repositorio. No duplicar issues.
+### Tres contratos que evitan dependencias artificiales
+
+- **Datos:** `metadata/splits.csv` (`image_path,class_name,split`) y `metadata/class_names.json` (ocho clases ordenadas).
+- **Características:** `extract_hls_features(image_path)` devuelve siete valores numéricos mínimos; modelos trabajan con `X,y` incluso si aún no existe el extractor real.
+- **Modelos y métricas:** `get_model_grids()` en ambos módulos devuelve dos pipelines con mallas de hiperparámetros; evaluación acepta etiquetas y probabilidades sin leer imágenes ni test por su cuenta.
+
+Consulta el detalle, los formatos y pruebas autónomas en [docs/CONTRATOS.md](./docs/CONTRATOS.md).
+
+> Los estados de esta tabla **no se actualizan automáticamente**. Para un tablero arrastrable con vistas Board, Table y Roadmap, crear un **GitHub Project** e importar los issues existentes del repositorio. No duplicar issues.
